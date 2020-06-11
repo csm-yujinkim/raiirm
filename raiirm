@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ $# == 1 ]
+then
+	if [ -x $1/.raiirm ]
+	then
+		$1/.raiirm
+		if [ $? == 0 ]
+		then
+			rm $1/.raiirm
+			rmdir $1
+		else
+			E=$?
+			echo "raiirm: Script non-zero exit code ($?). No modifications."
+			echo $E
+		fi
+	else
+		echo "raiirm: $1/.raiirm is not executable. No rmdir called."
+		exit 1
+	fi
+else
+	echo "raiirm: Usage: $0 [directory containing executable .raiirm file]"
+	exit 1
+fi
+
